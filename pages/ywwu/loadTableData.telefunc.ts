@@ -1,4 +1,4 @@
-import { and, eq, getTableColumns, gte, inArray, lte, sql } from 'drizzle-orm';
+import { and, eq, getTableColumns, gte, ilike, inArray, lte, sql } from 'drizzle-orm';
 import { personsToReachOut } from '../../drizzle/ywwu';
 import { db } from '../../orm/local';
 import { getMaterializedViewConfig } from 'drizzle-orm/pg-core';
@@ -38,7 +38,7 @@ export async function load({ dates, keywords }: { dates: string[], keywords: str
   })
   .from(vwEducationUnits)
   .where(and(
-    keywords?.length > 0 ? inArray(vwEducationUnits.externalsource, keywords) : undefined,
+    keywords?.length > 0 ? ilike(vwEducationUnits.externalsource, keywords.map(k => `%${k}%`).join('|')) : undefined,
     dates?.length > 0 ? and(
       gte(sql`${vwEducationUnits.macpa_creditdate}::timestamp`, sql`${dates[0]}::timestamp`),
       lte(sql`${vwEducationUnits.macpa_creditdate}`, sql`${dates[1]}::timestamp`),
@@ -52,6 +52,7 @@ export async function load({ dates, keywords }: { dates: string[], keywords: str
   const result = await db.select()
   .from(personsToReachOut)
   .where(hasCondition ? inArray(personsToReachOut.id, educationCondition) : undefined)
+  .limit(hasCondition ? 10^20 : 2000)
   ;
 
   const cols = getMaterializedViewConfig(personsToReachOut).selectedFields;

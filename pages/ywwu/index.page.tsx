@@ -84,34 +84,34 @@ const Form: React.FC = () => {
     <>
       <Space direction="vertical" className='w-full'>
         <Space direction="vertical" className='w-full'>
-          <Typography.Title level={5}>Keywords in credited courses</Typography.Title>
+          <Typography.Title level={3}>Contain any keywords in credited course titles</Typography.Title>
           <TextArea
             value={keywords}
             onChange={(e) => setKeywords(e.target.value || '')}
             rows={4}
-            placeholder="Paste comma separate keywords"
+            placeholder="Paste comma separate keywords. e.g. Corporate Finance,Leadership,Short-Term Rental"
           />
+          <Typography.Title level={5}>Preview parsed result to send to DB</Typography.Title>
           <div>
             {keywords.split(',').map((keyword) => {
               return (
-                <Tag>{keyword || 'INVALID: Empty Keyword'}</Tag>
+                <Tag>{keyword || 'IGNORE: Empty Keyword'}</Tag>
               )
             })}
           </div>
         </Space>
         <Space direction="vertical" className='w-full'>
-          <Typography.Title level={5}>Credited period</Typography.Title>
+          <Typography.Title level={3}>Credited period</Typography.Title>
           <RangePicker value={dates} onChange={(dates) => setDates(dates)} disabledDate={disabled6MonthsDate} picker="month" />
         </Space>
         <Button type="primary" icon={<SearchOutlined />} onClick={search}>
           Search
         </Button>
+        <Typography.Title level={5}>Search keywords or dates to display ALL results, otherwise it is limited to 2000 rows</Typography.Title>
       </Space>
-      <Space>
-        <div style={{ margin: "10px 0" }}>
-          <Button onClick={onBtnExport}>Download CSV export file</Button>
-        </div>
-      </Space>
+      <div style={{ margin: "10px 0" }} className="flex justify-end">
+        <Button onClick={onBtnExport}>Download CSV export file</Button>
+      </div>
       <div
         className="mt-4 ag-theme-quartz" // applying the grid theme
         style={{ height: 500 }} // the grid will fill the size of the parent container
@@ -120,6 +120,7 @@ const Form: React.FC = () => {
           ref={gridRef}
           rowData={rowData}
           columnDefs={colDefs}
+          pagination={true}
         />
       </div>
     </>
