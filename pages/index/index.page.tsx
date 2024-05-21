@@ -38,7 +38,7 @@ function Page() {
         >
           {urlParsed.search['loginfailed'] !== undefined && <Alert message="Invalid login credentials." type="error" />}
           <p className="form-title">Welcome back</p>
-          <p>Login to Illinois CPA Society Dashboard</p>
+          <p>Login to Michigan CPA Society Dashboard</p>
           <Form.Item
             name="username"
             rules={[{ required: true, message: 'Please input your username!' }]}
