@@ -1,0 +1,1899 @@
+{
+  "id": "f686e9d7-58f7-45f5-afe4-5c8fcd525723",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "6",
+  "dialect": "postgresql",
+  "tables": {
+    "public.vwMeetingAttendees": {
+      "name": "vwMeetingAttendees",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "registrant": {
+          "name": "registrant",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "company": {
+          "name": "company",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "travellingfrom": {
+          "name": "travellingfrom",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "arriving": {
+          "name": "arriving",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "departing": {
+          "name": "departing",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "airline": {
+          "name": "airline",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hotel": {
+          "name": "hotel",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "orderid": {
+          "name": "orderid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "meetingid": {
+          "name": "meetingid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "actualmeetingid": {
+          "name": "actualmeetingid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "namewcompany": {
+          "name": "namewcompany",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.vwPersonCPALicenses": {
+      "name": "vwPersonCPALicenses",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "personid": {
+          "name": "personid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Sequence": {
+          "name": "Sequence",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "licensetypeid": {
+          "name": "licensetypeid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "licensetype": {
+          "name": "licensetype",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "licenseno": {
+          "name": "licenseno",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "licensedate": {
+          "name": "licensedate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "licensestate": {
+          "name": "licensestate",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "licensestatusid": {
+          "name": "licensestatusid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "licensestatus": {
+          "name": "licensestatus",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expirationdate": {
+          "name": "expirationdate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "micpa_larastatus": {
+          "name": "micpa_larastatus",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "micpa_lastrenewaldate": {
+          "name": "micpa_lastrenewaldate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.vwPersons": {
+      "name": "vwPersons",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "namewcompany": {
+          "name": "namewcompany",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "prefix": {
+          "name": "prefix",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "firstname": {
+          "name": "firstname",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "middlename": {
+          "name": "middlename",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lastname": {
+          "name": "lastname",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "suffix": {
+          "name": "suffix",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "firstlast": {
+          "name": "firstlast",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "companyid": {
+          "name": "companyid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "companyname": {
+          "name": "companyname",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "company": {
+          "name": "company",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "department": {
+          "name": "department",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "preferredaddress": {
+          "name": "preferredaddress",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "preferredbillingaddress": {
+          "name": "preferredbillingaddress",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "preferredshippingaddress": {
+          "name": "preferredshippingaddress",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "addressid": {
+          "name": "addressid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "addressline1": {
+          "name": "addressline1",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "addressline2": {
+          "name": "addressline2",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "addressline3": {
+          "name": "addressline3",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "addressline4": {
+          "name": "addressline4",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "county": {
+          "name": "county",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "state": {
+          "name": "state",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zipcode": {
+          "name": "zipcode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zipcode5numeric": {
+          "name": "zipcode5numeric",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "country": {
+          "name": "country",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "countrycodeid": {
+          "name": "countrycodeid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "preferredphone": {
+          "name": "preferredphone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phoneid": {
+          "name": "phoneid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phonecountrycode": {
+          "name": "phonecountrycode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phoneareacode": {
+          "name": "phoneareacode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phoneextension": {
+          "name": "phoneextension",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "faxid": {
+          "name": "faxid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "faxcountrycode": {
+          "name": "faxcountrycode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "faxareacode": {
+          "name": "faxareacode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "faxphone": {
+          "name": "faxphone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cellphoneid": {
+          "name": "cellphoneid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cellcountrycode": {
+          "name": "cellcountrycode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cellareacode": {
+          "name": "cellareacode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cellphone": {
+          "name": "cellphone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pagerphoneid": {
+          "name": "pagerphoneid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pagercountrycode": {
+          "name": "pagercountrycode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pagerareacode": {
+          "name": "pagerareacode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pagerphone": {
+          "name": "pagerphone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pagerphoneextension": {
+          "name": "pagerphoneextension",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email1": {
+          "name": "email1",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email2": {
+          "name": "email2",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email3": {
+          "name": "email3",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "billingaddressid": {
+          "name": "billingaddressid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "billingaddressline1": {
+          "name": "billingaddressline1",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "billingaddressline2": {
+          "name": "billingaddressline2",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "billingaddressline3": {
+          "name": "billingaddressline3",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "billingaddressline4": {
+          "name": "billingaddressline4",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "billingcity": {
+          "name": "billingcity",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "billingcounty": {
+          "name": "billingcounty",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "billingstate": {
+          "name": "billingstate",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "billingzipcode": {
+          "name": "billingzipcode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "billingcountrycodeid": {
+          "name": "billingcountrycodeid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "billingcountry": {
+          "name": "billingcountry",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homeaddressid": {
+          "name": "homeaddressid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homeaddressline1": {
+          "name": "homeaddressline1",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homeaddressline2": {
+          "name": "homeaddressline2",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homeaddressline3": {
+          "name": "homeaddressline3",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homeaddressline4": {
+          "name": "homeaddressline4",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homecity": {
+          "name": "homecity",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homecounty": {
+          "name": "homecounty",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homestate": {
+          "name": "homestate",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homezipcode": {
+          "name": "homezipcode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homecountry": {
+          "name": "homecountry",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homephoneid": {
+          "name": "homephoneid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homecountrycodeid": {
+          "name": "homecountrycodeid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homecountrycode": {
+          "name": "homecountrycode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homeareacode": {
+          "name": "homeareacode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homephone": {
+          "name": "homephone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poboxaddressid": {
+          "name": "poboxaddressid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pobox": {
+          "name": "pobox",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poboxline2": {
+          "name": "poboxline2",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poboxline3": {
+          "name": "poboxline3",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poboxline4": {
+          "name": "poboxline4",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poboxcity": {
+          "name": "poboxcity",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poboxcounty": {
+          "name": "poboxcounty",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poboxstate": {
+          "name": "poboxstate",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poboxzipcode": {
+          "name": "poboxzipcode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poboxcountrycodeid": {
+          "name": "poboxcountrycodeid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poboxcountry": {
+          "name": "poboxcountry",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "socialsecurity": {
+          "name": "socialsecurity",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "organizationid": {
+          "name": "organizationid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mainaccountmanager": {
+          "name": "mainaccountmanager",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mainaccountmanagername": {
+          "name": "mainaccountmanagername",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ranking": {
+          "name": "ranking",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "referredby": {
+          "name": "referredby",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "referraltype": {
+          "name": "referraltype",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "website": {
+          "name": "website",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "birthday": {
+          "name": "birthday",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "supervisor": {
+          "name": "supervisor",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "assistantsname": {
+          "name": "assistantsname",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "assistantsphoneid": {
+          "name": "assistantsphoneid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "assistantscountrycode": {
+          "name": "assistantscountrycode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "assistantsareacode": {
+          "name": "assistantsareacode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "assistantsphone": {
+          "name": "assistantsphone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "assistantsextension": {
+          "name": "assistantsextension",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nickname": {
+          "name": "nickname",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gender": {
+          "name": "gender",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "spousename": {
+          "name": "spousename",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kids": {
+          "name": "kids",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "importantdate1": {
+          "name": "importantdate1",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "importantdescription1": {
+          "name": "importantdescription1",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "importantdate2": {
+          "name": "importantdate2",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "importantdescription2": {
+          "name": "importantdescription2",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "importantdate3": {
+          "name": "importantdate3",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "importantdescription3": {
+          "name": "importantdescription3",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "atmosphere": {
+          "name": "atmosphere",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mailcode": {
+          "name": "mailcode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "crrt": {
+          "name": "crrt",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "uscongress": {
+          "name": "uscongress",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "statesenate": {
+          "name": "statesenate",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "statehouse": {
+          "name": "statehouse",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "countydistrict": {
+          "name": "countydistrict",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nextcontactdate": {
+          "name": "nextcontactdate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mailexclude": {
+          "name": "mailexclude",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "faxexclude": {
+          "name": "faxexclude",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "emailexclude": {
+          "name": "emailexclude",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "direxclude": {
+          "name": "direxclude",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "prefcommmethodid": {
+          "name": "prefcommmethodid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contactmanagerid": {
+          "name": "contactmanagerid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "verifystatus": {
+          "name": "verifystatus",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "functionaltitle": {
+          "name": "functionaltitle",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contactrank": {
+          "name": "contactrank",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dirrank": {
+          "name": "dirrank",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "primaryfunctionid": {
+          "name": "primaryfunctionid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "primaryfunction": {
+          "name": "primaryfunction",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "membertypeid": {
+          "name": "membertypeid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "membertype": {
+          "name": "membertype",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "joindate": {
+          "name": "joindate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "duespaidthru": {
+          "name": "duespaidthru",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lastduespaymentdate": {
+          "name": "lastduespaymentdate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lastduesamount": {
+          "name": "lastduesamount",
+          "type": "numeric(19, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "terminationdate": {
+          "name": "terminationdate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "companymembertypeid": {
+          "name": "companymembertypeid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "comembertype": {
+          "name": "comembertype",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "companymembertype": {
+          "name": "companymembertype",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "companyjoindate": {
+          "name": "companyjoindate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "companyduespaidthru": {
+          "name": "companyduespaidthru",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "companylastduespaymentdate": {
+          "name": "companylastduespaymentdate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "companylastduesamount": {
+          "name": "companylastduesamount",
+          "type": "numeric(19, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "companyterminationdate": {
+          "name": "companyterminationdate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "oldid": {
+          "name": "oldid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "oldcompanyid": {
+          "name": "oldcompanyid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "glorderlevelid": {
+          "name": "glorderlevelid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "glpaymentlevelid": {
+          "name": "glpaymentlevelid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "creditstatusid": {
+          "name": "creditstatusid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "creditlimit": {
+          "name": "creditlimit",
+          "type": "numeric(19, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "billingterms": {
+          "name": "billingterms",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "apvendorid": {
+          "name": "apvendorid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "preferredcurrencytypeid": {
+          "name": "preferredcurrencytypeid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "directions": {
+          "name": "directions",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Comments": {
+          "name": "Comments",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "whocreated": {
+          "name": "whocreated",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "whoupdated": {
+          "name": "whoupdated",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "datecreated": {
+          "name": "datecreated",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dateupdated": {
+          "name": "dateupdated",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lastduesamountcurrencytypeid": {
+          "name": "lastduesamountcurrencytypeid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "creditlimitcurrencytypeid": {
+          "name": "creditlimitcurrencytypeid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "companylastduesamountcurrencytypeid": {
+          "name": "companylastduesamountcurrencytypeid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_aicpanumber": {
+          "name": "macpa_aicpanumber",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_aicpamember": {
+          "name": "macpa_aicpamember",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_federaltaxid": {
+          "name": "macpa_federaltaxid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_minoritygroup": {
+          "name": "macpa_minoritygroup",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_priorname": {
+          "name": "macpa_priorname",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_region": {
+          "name": "macpa_region",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_reinstatedate": {
+          "name": "macpa_reinstatedate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_badgecredentials": {
+          "name": "macpa_badgecredentials",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_terminationreasonid": {
+          "name": "macpa_terminationreasonid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_terminationreason": {
+          "name": "macpa_terminationreason",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_legacy_bc": {
+          "name": "macpa_legacy_bc",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_legacy_ty": {
+          "name": "macpa_legacy_ty",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_legacy_me": {
+          "name": "macpa_legacy_me",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_gendername": {
+          "name": "macpa_gendername",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_secondaryjoindate": {
+          "name": "macpa_secondaryjoindate",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_legacychapter": {
+          "name": "macpa_legacychapter",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_speakerstatus": {
+          "name": "macpa_speakerstatus",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_speakernotes": {
+          "name": "macpa_speakernotes",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_bio": {
+          "name": "macpa_bio",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_biolastupdated": {
+          "name": "macpa_biolastupdated",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_memberstatus": {
+          "name": "macpa_memberstatus",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_statustype": {
+          "name": "macpa_statustype",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cpastatecensus": {
+          "name": "cpastatecensus",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cpadistrictcode": {
+          "name": "cpadistrictcode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cpadistricttypeid": {
+          "name": "cpadistricttypeid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cpadistricttype": {
+          "name": "cpadistricttype",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cpapoliticalpartyid": {
+          "name": "cpapoliticalpartyid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cpapoliticalparty": {
+          "name": "cpapoliticalparty",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cpalegislatorid": {
+          "name": "cpalegislatorid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cpaisactivelegislator": {
+          "name": "cpaisactivelegislator",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_legacyuscongress": {
+          "name": "macpa_legacyuscongress",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_legacystatesenate": {
+          "name": "macpa_legacystatesenate",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_legacystatehouse": {
+          "name": "macpa_legacystatehouse",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_cpetotalaa": {
+          "name": "macpa_cpetotalaa",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_cpetotalet": {
+          "name": "macpa_cpetotalet",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_cpetotalot": {
+          "name": "macpa_cpetotalot",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_cpetotaldlaa": {
+          "name": "macpa_cpetotaldlaa",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_cpetotaldlet": {
+          "name": "macpa_cpetotaldlet",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_cpetotaldlot": {
+          "name": "macpa_cpetotaldlot",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_cpetotal": {
+          "name": "macpa_cpetotal",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cpapersonalfaxid": {
+          "name": "cpapersonalfaxid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cpapersonalfaxcountrycode": {
+          "name": "cpapersonalfaxcountrycode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cpapersonalfaxareacode": {
+          "name": "cpapersonalfaxareacode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cpapersonalfaxphone": {
+          "name": "cpapersonalfaxphone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_creditmemototal": {
+          "name": "macpa_creditmemototal",
+          "type": "numeric(19, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_nosuggestedpac": {
+          "name": "macpa_nosuggestedpac",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_pacagreementexemption": {
+          "name": "macpa_pacagreementexemption",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_paccoalition": {
+          "name": "macpa_paccoalition",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_companytype": {
+          "name": "macpa_companytype",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_badgename": {
+          "name": "macpa_badgename",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_pacribbon": {
+          "name": "macpa_pacribbon",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_reviewerpr": {
+          "name": "macpa_reviewerpr",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_technicalreviewerpr": {
+          "name": "macpa_technicalreviewerpr",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_nopacdonations": {
+          "name": "macpa_nopacdonations",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_fullname": {
+          "name": "macpa_fullname",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_preferredaddressid": {
+          "name": "macpa_preferredaddressid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_preferredaddressline1": {
+          "name": "macpa_preferredaddressline1",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_preferredaddressline2": {
+          "name": "macpa_preferredaddressline2",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_preferredaddressline3": {
+          "name": "macpa_preferredaddressline3",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_preferredaddressline4": {
+          "name": "macpa_preferredaddressline4",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_preferredcity": {
+          "name": "macpa_preferredcity",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_preferredstate": {
+          "name": "macpa_preferredstate",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_preferredzip": {
+          "name": "macpa_preferredzip",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_preferredcounty": {
+          "name": "macpa_preferredcounty",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_preferredcountry": {
+          "name": "macpa_preferredcountry",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_joindate": {
+          "name": "macpa_joindate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ordertotal__fvc": {
+          "name": "ordertotal__fvc",
+          "type": "numeric(19, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "balancedue__fvc": {
+          "name": "balancedue__fvc",
+          "type": "numeric(19, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_balancedue": {
+          "name": "macpa_balancedue",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_iscurrentlegislator": {
+          "name": "macpa_iscurrentlegislator",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_legislatordistricttype": {
+          "name": "macpa_legislatordistricttype",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_legislatordistrict": {
+          "name": "macpa_legislatordistrict",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_legislatorid": {
+          "name": "macpa_legislatorid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_legislativeprefix": {
+          "name": "macpa_legislativeprefix",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_legislativesuffix": {
+          "name": "macpa_legislativesuffix",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_legprintflag": {
+          "name": "macpa_legprintflag",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "photo": {
+          "name": "photo",
+          "type": "bytea",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "billingbadaddress": {
+          "name": "billingbadaddress",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homebadaddress": {
+          "name": "homebadaddress",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poboxbadaddress": {
+          "name": "poboxbadaddress",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "businessbadaddress": {
+          "name": "businessbadaddress",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_importsource": {
+          "name": "macpa_importsource",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_currentushouse__c": {
+          "name": "macpa_currentushouse__c",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_currentmisenate__c": {
+          "name": "macpa_currentmisenate__c",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_currentmihouse__c": {
+          "name": "macpa_currentmihouse__c",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_pastushouse__c": {
+          "name": "macpa_pastushouse__c",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_pastmisenate__c": {
+          "name": "macpa_pastmisenate__c",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_pastmihouse__c": {
+          "name": "macpa_pastmihouse__c",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kwpersonid": {
+          "name": "kwpersonid",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "legislatorreviewrequired": {
+          "name": "legislatorreviewrequired",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "externalaccountprofileurl": {
+          "name": "externalaccountprofileurl",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ignoresocialnetworkcompanydifferences": {
+          "name": "ignoresocialnetworkcompanydifferences",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ignoresocialnetworktitledifferences": {
+          "name": "ignoresocialnetworktitledifferences",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "isgroupadmin": {
+          "name": "isgroupadmin",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "macpa_ismember": {
+          "name": "macpa_ismember",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "micpa_mailballot": {
+          "name": "micpa_mailballot",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "micpa_duesmessage": {
+          "name": "micpa_duesmessage",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "micpa_firmadmin": {
+          "name": "micpa_firmadmin",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "micpa_excludefirmroster": {
+          "name": "micpa_excludefirmroster",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "duesautoisactive__fvc": {
+          "name": "duesautoisactive__fvc",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cesscore": {
+          "name": "cesscore",
+          "type": "numeric(28, 0)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "spacelinkhandle": {
+          "name": "spacelinkhandle",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "statusname": {
+          "name": "statusname",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "formattedaddress": {
+          "name": "formattedaddress",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "formattedphone": {
+          "name": "formattedphone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "issystem": {
+          "name": "issystem",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "micpa_importdate1": {
+          "name": "micpa_importdate1",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "micpa_importdate2": {
+          "name": "micpa_importdate2",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "micpa_formattedcellphone": {
+          "name": "micpa_formattedcellphone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "micpa_absorblmsid": {
+          "name": "micpa_absorblmsid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "estoreid": {
+          "name": "estoreid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vip_micpa": {
+          "name": "vip_micpa",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "scholarshipwinner": {
+          "name": "scholarshipwinner",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "micpa_peerreviewprofessional": {
+          "name": "micpa_peerreviewprofessional",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "micpa_overridepac": {
+          "name": "micpa_overridepac",
+          "type": "numeric(19, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "originallicensedate_pb": {
+          "name": "originallicensedate_pb",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
