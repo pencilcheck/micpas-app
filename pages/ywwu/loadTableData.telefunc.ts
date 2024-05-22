@@ -41,7 +41,7 @@ export async function load({ dates, keywords }: { dates: string[], keywords: str
     keywords?.length > 0 ? ilike(vwEducationUnits.externalsource, keywords.map(k => `%${k}%`).join('|')) : undefined,
     dates?.length > 0 ? and(
       gte(sql`${vwEducationUnits.macpa_creditdate}::timestamp`, sql`${dates[0]}::timestamp`),
-      lte(sql`${vwEducationUnits.macpa_creditdate}`, sql`${dates[1]}::timestamp`),
+      lte(sql`${vwEducationUnits.macpa_creditdate}::timestamp`, sql`${dates[1]}::timestamp`),
     ) : undefined
   ));
 
