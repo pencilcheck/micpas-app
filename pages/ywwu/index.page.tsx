@@ -96,7 +96,7 @@ const Form: React.FC = () => {
         <Button type="primary" icon={<SearchOutlined />} onClick={search}>
           Search
         </Button>
-        <Typography.Title level={5}>Search keywords or dates to display ALL results, otherwise it is limited to 2000 rows</Typography.Title>
+        <Typography.Title level={5}>Search keywords or dates to display ALL results, otherwise it is limited to 20000 rows</Typography.Title>
       </Space>
       <div style={{ margin: "10px 0" }} className="flex justify-end">
         <Button onClick={onBtnExport}>Download CSV export file</Button>

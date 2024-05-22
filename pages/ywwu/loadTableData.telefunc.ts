@@ -52,7 +52,7 @@ export async function load({ dates, keywords }: { dates: string[], keywords: str
   const result = await db.select()
   .from(personsToReachOut)
   .where(hasCondition ? inArray(personsToReachOut.id, educationCondition) : undefined)
-  .limit(hasCondition ? 10^20 : 2000)
+  .limit(hasCondition ? 10^20 : 20000)
   ;
 
   const cols = getMaterializedViewConfig(personsToReachOut).selectedFields;
