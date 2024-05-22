@@ -2,7 +2,7 @@ import { and, eq, getTableColumns, gte, ilike, inArray, lte, sql } from 'drizzle
 import { personsToReachOut } from '../../drizzle/ywwu';
 import { db } from '../../orm/local';
 import { getMaterializedViewConfig } from 'drizzle-orm/pg-core';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { vwEducationUnits } from '../../drizzle/schema';
 
 export async function loadPrimaryFunctions() {
@@ -25,34 +25,36 @@ export async function loadRegions() {
   return [];
 }
 
-export async function load({ dates, keywords }: { dates: string[], keywords: string[] }) {
+export async function load({ dates, keywords }: { dates?: string[], keywords?: string[] }) {
+  const days = (dates || []).map((d, i) => i === 0 ? dayjs(d).startOf('month') : dayjs(d).endOf('month'));
   // filter by education units text search (keywords) and dates
   // filter by meeting ids (within UI)
   // filter by deceased (already excluded in view)
   // filter by other values (within UI)
 
   // make sure there is no duplicate person ids
+  console.log('days', days.map(d => d.toISOString()))
 
-  const query = db.selectDistinct({
+  const query = await db.selectDistinct({
     id: vwEducationUnits.personid
   })
   .from(vwEducationUnits)
   .where(and(
     keywords?.length > 0 ? ilike(vwEducationUnits.externalsource, keywords.map(k => `%${k}%`).join('|')) : undefined,
-    dates?.length > 0 ? and(
-      gte(sql`${vwEducationUnits.macpa_creditdate}::timestamp`, sql`${dates[0]}::timestamp`),
-      lte(sql`${vwEducationUnits.macpa_creditdate}::timestamp`, sql`${dates[1]}::timestamp`),
+    days?.length > 0 ? and(
+      gte(sql`${vwEducationUnits.macpa_creditdate}::timestamp`, sql`${days[0].toISOString()}::timestamp`),
+      lte(sql`${vwEducationUnits.macpa_creditdate}::timestamp`, sql`${days[1].toISOString()}::timestamp`),
     ) : undefined
   ));
 
-  const hasCondition = keywords?.length > 0 || dates?.length > 0;
-
-  const educationCondition = sql`${query}`;
-
   const result = await db.select()
   .from(personsToReachOut)
-  .where(hasCondition ? inArray(personsToReachOut.id, educationCondition) : undefined)
-  .limit(hasCondition ? 10^20 : 20000)
+  .where(
+    query.length > 0
+    ? inArray(personsToReachOut.id, query.map(q => q.id))
+    : undefined
+  )
+  .limit(90000)
   ;
 
   const cols = getMaterializedViewConfig(personsToReachOut).selectedFields;
