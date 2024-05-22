@@ -19,17 +19,6 @@ import { Dayjs } from 'dayjs';
 
 export { Page };
 
-// Disabled 6 months from the selected date
-const disabled6MonthsDate: DatePickerProps['disabledDate'] = (current, { from }) => {
-  if (from) {
-    const curMonth = current.year() * 12 + current.month();
-    const fromMonth = from.year() * 12 + from.month();
-    return Math.abs(fromMonth - curMonth) >= 6;
-  }
-
-  return false;
-};
-
 const { TextArea } = Input;
 
 const Form: React.FC = () => {
@@ -102,7 +91,7 @@ const Form: React.FC = () => {
         </Space>
         <Space direction="vertical" className='w-full'>
           <Typography.Title level={3}>Credited period</Typography.Title>
-          <RangePicker value={dates} onChange={(dates) => setDates(dates)} disabledDate={disabled6MonthsDate} picker="month" />
+          <RangePicker value={dates} onChange={(dates) => setDates(dates)} picker="month" />
         </Space>
         <Button type="primary" icon={<SearchOutlined />} onClick={search}>
           Search
