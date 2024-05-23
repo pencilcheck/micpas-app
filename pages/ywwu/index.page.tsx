@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { CloseCircleOutlined, SearchOutlined } from '@ant-design/icons';
-import { Button, Input } from 'antd';
+import { Button, Input, Spin } from 'antd';
 import { Tag } from 'antd';
 
 import { DatePicker, Space, Typography } from 'antd';
@@ -22,17 +22,20 @@ export { Page };
 const { TextArea } = Input;
 
 const Form: React.FC = () => {
+  const [loading, setLoading] = useState(false);
   const [keywords, setKeywords] = useState('')
   const [dates, setDates] = useState<Dayjs[]>([])
   const gridRef = useRef<AgGridReact>(null);
 
   const { data, isRefetching, refetch } = useQuery(load, {})
 
-  const search = () => {
-    refetch({
+  const search = async () => {
+    setLoading(true);
+    await refetch({
       dates: dates.map(d => d.toISOString()),
       keywords: keywords.split(','),
-    })
+    });
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -71,6 +74,7 @@ const Form: React.FC = () => {
 
   return (
     <>
+      <Spin spinning={loading} fullscreen />
       <Space direction="vertical" className='w-full'>
         <Space direction="vertical" className='w-full'>
           <Typography.Title level={3}>Contain any keywords in credited course titles</Typography.Title>
