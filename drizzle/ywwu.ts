@@ -28,7 +28,7 @@ export const personsToReachOut = pgMaterializedView('persons_to_reach_out')
 
       // for filtering
       primaryFunction: vwPersons.primaryfunction,
-      licenseState: vwPersonCPALicenses.licensestate,
+      //licenseState: vwPersonCPALicenses.licensestate,
       homeState: vwPersons.homestate,
       region: vwPersons.macpa_region,
       attendedMeetingIds: sql`${
@@ -36,13 +36,13 @@ export const personsToReachOut = pgMaterializedView('persons_to_reach_out')
       }`.as('attended_meeting_ids'),
     })
     .from(vwPersons)
-    .leftJoin(vwPersonCPALicenses, and(
-      // TODO confirm this with Randy
-      eq(vwPersons.id, vwPersonCPALicenses.personid),
-      eq(vwPersonCPALicenses.licensestatusid, 6), // Licensed Accountant License
-      eq(vwPersonCPALicenses.licensetypeid, 1), // CPE license
-      gte(sql`${vwPersonCPALicenses.expirationdate}::timestamp`, sql`now()::timestamp`), // not expired
-    ))
+    //.leftJoin(vwPersonCPALicenses, and(
+      //// TODO confirm this with Randy
+      //eq(vwPersons.id, vwPersonCPALicenses.personid),
+      //eq(vwPersonCPALicenses.licensestatusid, 6), // Licensed Accountant License
+      //eq(vwPersonCPALicenses.licensetypeid, 1), // CPE license
+      //gte(sql`${vwPersonCPALicenses.expirationdate}::timestamp`, sql`now()::timestamp`), // not expired
+    //))
     .where(and(
       not(eq(vwPersons.status, 5)) // exclude deceased persons
     ))

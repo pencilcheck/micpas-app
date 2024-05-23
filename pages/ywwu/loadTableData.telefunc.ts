@@ -47,15 +47,19 @@ export async function load({ dates, keywords }: { dates?: string[], keywords?: s
     ) : undefined
   ));
 
+  console.log('query', query.length);
+
   const result = await db.select()
   .from(personsToReachOut)
   .where(
-    query.length > 0
+    query.length > 0 && (dates || keywords)
     ? inArray(personsToReachOut.id, query.map(q => q.id))
     : undefined
   )
   .limit(90000)
   ;
+
+  console.log('result', result.length);
 
   const cols = getMaterializedViewConfig(personsToReachOut).selectedFields;
 
