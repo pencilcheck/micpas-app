@@ -1,6 +1,20 @@
+import { and, eq, not, sql } from "drizzle-orm";
 import { alias, pgMaterializedView } from "drizzle-orm/pg-core";
-import { vwMeetingAttendees, vwPersonCPALicenses, vwPersons } from "./schema";
-import { and, eq, gte, not, sql } from "drizzle-orm";
+import { vwEducationUnits, vwMeetingAttendees, vwPersons } from "./schema";
+
+export const educationVectors = pgMaterializedView('education_vectors')
+  .with({
+    autovacuum_enabled: true,
+  })
+  .withNoData()
+  .as((qb) => (
+    qb.select({
+      id: vwEducationUnits.personid,
+      macpa_creditdate: vwEducationUnits.macpa_creditdate,
+      vector: sql`to_tsvector(${vwEducationUnits.externalsource})`.as('vector'),
+    })
+    .from(vwEducationUnits)
+  ));
 
 const meetingParent = alias(vwMeetingAttendees, "meeting_parent")
 export const personsToReachOut = pgMaterializedView('persons_to_reach_out')

@@ -2,13 +2,14 @@ import Promise from 'bluebird';
 import { sql } from "drizzle-orm";
 import { getMaterializedViewConfig, getViewConfig } from "drizzle-orm/pg-core";
 import { db } from '../orm/local';
-import { personsToReachOut } from '../drizzle/ywwu';
+import { educationVectors, personsToReachOut } from '../drizzle/ywwu';
 
 
 const foundation = () => {
 
   return [
-    personsToReachOut
+    personsToReachOut,
+    educationVectors,
   ]
 }
 
