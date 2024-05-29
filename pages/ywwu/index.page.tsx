@@ -77,33 +77,35 @@ const Form: React.FC = () => {
       <Spin spinning={loading} fullscreen />
       <Space direction="vertical" className='w-full'>
         <Space direction="vertical" className='w-full'>
-          <Typography.Title level={3}>Contain any keywords in credited course titles</Typography.Title>
-          <TextArea
-            value={keywords}
-            onChange={(e) => setKeywords(e.target.value || '')}
-            rows={4}
-            placeholder="Paste comma separate keywords. e.g. Corporate Finance,Leadership,Short-Term Rental"
-          />
-          <Typography.Title level={5}>Preview parsed result to send to DB</Typography.Title>
-          <div>
-            {keywords.split(',').map((keyword) => {
-              return (
-                <Tag>{keyword || 'IGNORE: Empty Keyword'}</Tag>
-              )
-            })}
-          </div>
+          <Typography.Title level={2}>MICPA Query Builder</Typography.Title>
+          <Space direction="vertical" className='w-full bg-[#FAFAFA] p-6 border border-[#EFEFEF]'>
+            <Typography.Title level={5}>Enter Keywords</Typography.Title>
+            <TextArea
+              value={keywords}
+              onChange={(e) => setKeywords(e.target.value || '')}
+              rows={4}
+              placeholder="Type/Paste comma separate keywords. e.g. Corporate Finance,Leadership,Short-Term Rental"
+            />
+            <div>
+              <span className='text-[#B3B3B3] text-xs mr-6'>Preview parsed result:</span>
+              {keywords.split(',').map((keyword) => {
+                return (
+                  keyword && <Tag>{keyword}</Tag>
+                )
+              })}
+            </div>
+            <Space direction="vertical" className='w-full'>
+              <Typography.Title level={5}>Select credited period</Typography.Title>
+              <RangePicker value={dates} onChange={(dates) => setDates(dates)} picker="month" />
+            </Space>
+            <Button type="primary" icon={<SearchOutlined />} onClick={search}>
+              Search
+            </Button>
+          </Space>
         </Space>
-        <Space direction="vertical" className='w-full'>
-          <Typography.Title level={3}>Credited period</Typography.Title>
-          <RangePicker value={dates} onChange={(dates) => setDates(dates)} picker="month" />
-        </Space>
-        <Button type="primary" icon={<SearchOutlined />} onClick={search}>
-          Search
-        </Button>
-        <Typography.Title level={5}>Search keywords or dates to display ALL results, otherwise it is limited to 90000 rows</Typography.Title>
       </Space>
       <div style={{ margin: "10px 0" }} className="flex justify-end">
-        <Button onClick={onBtnExport}>Download CSV export file</Button>
+        <Button onClick={onBtnExport}>Download result as CSV</Button>
       </div>
       <div
         className="mt-4 ag-theme-quartz" // applying the grid theme
