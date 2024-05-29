@@ -81,7 +81,7 @@ const Form: React.FC = () => {
           <Typography.Title level={2}>MICPA Query Builder</Typography.Title>
           <Space direction="vertical" className='w-full bg-[#FAFAFA] p-6 border border-[#EFEFEF]'>
             <Space direction="vertical" className='w-full'>
-              <Typography.Title level={5}>Select credited period (recommended to speed up query))</Typography.Title>
+              <Typography.Title level={5}>Select credited period (recommended to speed up query)</Typography.Title>
               <RangePicker value={dates} onChange={(dates) => setDates(dates)} picker="month" />
             </Space>
             <Typography.Title level={5}>Enter Keywords</Typography.Title>
