@@ -1,5 +1,5 @@
 import { and, eq, getTableColumns, gte, ilike, inArray, lte, sql } from 'drizzle-orm';
-import { personsToReachOut } from '../../drizzle/ywwu';
+import { educationVectors, personsToReachOut } from '../../drizzle/ywwu';
 import { db } from '../../orm/local';
 import { getMaterializedViewConfig } from 'drizzle-orm/pg-core';
 import dayjs, { Dayjs } from 'dayjs';
@@ -36,24 +36,24 @@ export async function load({ dates, keywords }: { dates?: string[], keywords?: s
   console.log('days', days.map(d => d.toISOString()))
 
   const query = await db.selectDistinct({
-    id: vwEducationUnits.personid
+    id: educationVectors.id
   })
-  .from(vwEducationUnits)
+  .from(educationVectors)
   .where(and(
-    keywords?.length > 0 ? ilike(vwEducationUnits.externalsource, keywords.map(k => `%${k}%`).join('|')) : undefined,
+    keywords && keywords?.length > 0 ? sql`${educationVectors.vector} @@ to_tsquery(${keywords.map(k => `'${k}'`).join(' | ')})` : undefined,
     days?.length > 0 ? and(
-      gte(sql`${vwEducationUnits.macpa_creditdate}::timestamp`, sql`${days[0].toISOString()}::timestamp`),
-      lte(sql`${vwEducationUnits.macpa_creditdate}::timestamp`, sql`${days[1].toISOString()}::timestamp`),
+      gte(sql`${educationVectors.macpa_creditdate}::timestamp`, sql`${days[0].toISOString()}::timestamp`),
+      lte(sql`${educationVectors.macpa_creditdate}::timestamp`, sql`${days[1].toISOString()}::timestamp`),
     ) : undefined
   ));
 
   console.log('query', query.length);
 
-  const result = await db.select()
+  const result = await db.selectDistinctOn([personsToReachOut.id])
   .from(personsToReachOut)
   .where(
-    query.length > 0 && (dates || keywords)
-    ? inArray(personsToReachOut.id, query.map(q => q.id))
+    query && query.length > 0 && (dates || keywords)
+    ? inArray(personsToReachOut.id, query.filter(q => q.id).map(q => q.id!))
     : undefined
   )
   .limit(90000)
