@@ -1,4 +1,5 @@
 import { and, eq, getTableColumns, gte, ilike, inArray, lte, sql } from 'drizzle-orm';
+import compact from 'lodash/compact';
 import { educationVectors, personsToReachOut } from '../../drizzle/ywwu';
 import { db } from '../../orm/local';
 import { getMaterializedViewConfig } from 'drizzle-orm/pg-core';
@@ -34,13 +35,16 @@ export async function load({ dates, keywords }: { dates?: string[], keywords?: s
 
   // make sure there is no duplicate person ids
   console.log('days', days.map(d => d.toISOString()))
+  console.log('keywords', compact(keywords))
+
+  const tsQuery = compact(keywords)?.length > 0 ? compact(keywords).map((k: string) => `'${k}'`).join(' | ') : false;
 
   const query = await db.selectDistinct({
     id: educationVectors.id
   })
   .from(educationVectors)
   .where(and(
-    keywords && keywords?.length > 0 ? sql`${educationVectors.vector} @@ to_tsquery(${keywords.map(k => `'${k}'`).join(' | ')})` : undefined,
+    tsQuery ? sql`${educationVectors.vector} @@ to_tsquery(${tsQuery})` : undefined,
     days?.length > 0 ? and(
       gte(sql`${educationVectors.macpa_creditdate}::timestamp`, sql`${days[0].toISOString()}::timestamp`),
       lte(sql`${educationVectors.macpa_creditdate}::timestamp`, sql`${days[1].toISOString()}::timestamp`),

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { CloseCircleOutlined, SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Spin } from 'antd';
 import { Tag } from 'antd';
+import compact from 'lodash/compact';
 
 import { DatePicker, Space, Typography } from 'antd';
 import type { DatePickerProps } from 'antd';
@@ -33,7 +34,7 @@ const Form: React.FC = () => {
     setLoading(true);
     await refetch({
       dates: dates.map(d => d.toISOString()),
-      keywords: keywords.split(','),
+      keywords: compact(keywords.split(',')),
     });
     setLoading(false);
   }
@@ -79,6 +80,10 @@ const Form: React.FC = () => {
         <Space direction="vertical" className='w-full'>
           <Typography.Title level={2}>MICPA Query Builder</Typography.Title>
           <Space direction="vertical" className='w-full bg-[#FAFAFA] p-6 border border-[#EFEFEF]'>
+            <Space direction="vertical" className='w-full'>
+              <Typography.Title level={5}>Select credited period (recommended to speed up query))</Typography.Title>
+              <RangePicker value={dates} onChange={(dates) => setDates(dates)} picker="month" />
+            </Space>
             <Typography.Title level={5}>Enter Keywords</Typography.Title>
             <TextArea
               value={keywords}
@@ -94,10 +99,6 @@ const Form: React.FC = () => {
                 )
               })}
             </div>
-            <Space direction="vertical" className='w-full'>
-              <Typography.Title level={5}>Select credited period</Typography.Title>
-              <RangePicker value={dates} onChange={(dates) => setDates(dates)} picker="month" />
-            </Space>
             <Button type="primary" icon={<SearchOutlined />} onClick={search}>
               Search
             </Button>
