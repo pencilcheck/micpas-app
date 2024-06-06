@@ -1,6 +1,6 @@
-import { and, eq, not, sql } from "drizzle-orm";
+import { and, eq, gte, not, sql } from "drizzle-orm";
 import { alias, pgMaterializedView } from "drizzle-orm/pg-core";
-import { vwEducationUnits, vwMeetingAttendees, vwPersons } from "./schema";
+import { vwEducationUnits, vwMeetingAttendees, vwPersonCPALicenses, vwPersons } from "./schema";
 
 export const educationVectors = pgMaterializedView('education_vectors')
   .with({
@@ -10,6 +10,7 @@ export const educationVectors = pgMaterializedView('education_vectors')
   .as((qb) => (
     qb.select({
       id: vwEducationUnits.personid,
+      isThirdParty: sql`TRIM(${vwEducationUnits.source}) = '3rd Party' AND ${vwEducationUnits.webinarvendorid} IS NULL`.as('is_third_party'),
       macpa_creditdate: vwEducationUnits.macpa_creditdate,
       vector: sql`to_tsvector(${vwEducationUnits.externalsource})`.as('vector'),
     })
@@ -22,8 +23,20 @@ export const personsToReachOut = pgMaterializedView('persons_to_reach_out')
     autovacuum_enabled: true,
   })
   .withNoData()
-  .as((qb) => (
-    qb.select({
+  .as((qb) => {
+    const attendedMeetingIdsLateral = qb.select({
+      ids: sql`JSONB_AGG(${meetingParent.actualmeetingid})`
+    })
+    .from(meetingParent)
+    .where(eq(vwPersons.id, meetingParent.id))
+
+    const licensedStatesLateral = qb.select({
+      state: sql`JSON_AGG(${vwPersonCPALicenses.licensestate})`
+    })
+    .from(vwPersonCPALicenses)
+    .where(eq(vwPersons.id, vwPersonCPALicenses.personid))
+
+    return qb.select({
       id: vwPersons.id,
       firstName: vwPersons.firstname,
       lastName: vwPersons.lastname,
@@ -42,12 +55,11 @@ export const personsToReachOut = pgMaterializedView('persons_to_reach_out')
 
       // for filtering
       primaryFunction: vwPersons.primaryfunction,
-      //licenseState: vwPersonCPALicenses.licensestate,
+      //licenseStates: vwPersonCPALicenses.licensestate,
+      licenseStates: sql`${licensedStatesLateral}`.as('license_states'),
       homeState: vwPersons.homestate,
       region: vwPersons.macpa_region,
-      attendedMeetingIds: sql`${
-        qb.select({ ids: sql`JSONB_AGG(${meetingParent.actualmeetingid})` }).from(meetingParent).where(eq(vwPersons.id, meetingParent.id))
-      }`.as('attended_meeting_ids'),
+      attendedMeetingIds: sql`${attendedMeetingIdsLateral}`.as('attended_meeting_ids'),
     })
     .from(vwPersons)
     //.leftJoin(vwPersonCPALicenses, and(
@@ -59,5 +71,5 @@ export const personsToReachOut = pgMaterializedView('persons_to_reach_out')
     //))
     .where(and(
       not(eq(vwPersons.status, 5)) // exclude deceased persons
-    ))
-  ));
+    ));
+  });
