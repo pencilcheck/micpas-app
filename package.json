@@ -18,14 +18,15 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
+    "ag-grid-enterprise": "^31.3.0",
     "@ant-design/cssinjs": "^1.17.2",
     "@ant-design/icons": "5.1.4",
     "@neondatabase/serverless": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^6.3.0",
     "@vitejs/plugin-react": "^4.0.4",
-    "ag-grid-community": "^31.3.2",
-    "ag-grid-react": "^31.3.2",
+    "ag-grid-react": "^31.3.0",
+    "ag-grid-community": "^31.3.0",
     "antd": "^5.17.3",
     "bluebird": "^3.7.2",
     "compression": "^1.7.4",
