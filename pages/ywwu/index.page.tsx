@@ -1,22 +1,25 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { CloseCircleOutlined, SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Spin } from 'antd';
-import { Tag } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import { Button, Input, Spin, Tag } from 'antd';
 import compact from 'lodash/compact';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { DatePicker, Space, Typography } from 'antd';
-import type { DatePickerProps } from 'antd';
 
 const { RangePicker } = DatePicker;
 
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
+
+import 'ag-grid-enterprise';
+
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
+
 import "../../ag-grid-theme-builder.css";
-import { load } from './loadTableData.telefunc';
-import useQuery from '../../hooks/useQuery';
-import { ErrorBound } from '../../components/ErrorBound';
+
 import { Dayjs } from 'dayjs';
+import { ErrorBound } from '../../components/ErrorBound';
+import useQuery from '../../hooks/useQuery';
+import { load } from './loadTableData.telefunc';
 
 export { Page };
 
@@ -51,7 +54,7 @@ const Form: React.FC = () => {
     if (!isRefetching && data) {
       colDefs.find((def) => {
         if (def.field === 'company') {
-          def.filterParams.filterOptions.push({
+          def.filterParams.filters.find(d => d.filter === 'agTextColumnFilter').filterParams.filterOptions.push({
             displayKey: 'no_big6',
             displayName: 'No Big 6',
             predicate: (filterValues: any[], cellValue: any) => {
@@ -72,6 +75,14 @@ const Form: React.FC = () => {
   const rowData = data.rowData;
   // Column Definitions: Defines the columns to be displayed.
   const colDefs = data.colDefs;
+
+  const defaultColDef = {
+    // remove advanced features, enable only if it is requested
+    suppressHeaderMenuButton: true,
+    suppressHeaderContextMenu: true,
+  }
+
+  // TODO refer to the feature request milestone: https://docs.google.com/document/d/1-hETY_hsz0nTJnsPSsNWFYwxilChaO0yUXjWmiDUSJA/edit
 
   return (
     <>
@@ -117,6 +128,8 @@ const Form: React.FC = () => {
           rowData={rowData}
           columnDefs={colDefs}
           pagination={true}
+          columnMenu='new'
+          defaultColDef={defaultColDef}
         />
       </div>
     </>

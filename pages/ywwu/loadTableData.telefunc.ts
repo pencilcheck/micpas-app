@@ -72,14 +72,25 @@ export async function load({ dates, keywords }: { dates?: string[], keywords?: s
     rowData: result,
     colDefs: Object.keys(cols).map((key) => ({
       field: key,
-      filter: true,
+      filter: 'agMultiColumnFilter',
       filterParams: {
-        filterOptions: [
-          "contains",
-          "notContains",
+        filters: [
+          {
+            filter: 'agTextColumnFilter',
+            filterParams: {
+              filterOptions: [
+                "contains",
+                "notContains",
+                "notBlank", // dan requested this
+              ],
+              debounceMs: 200,
+              maxNumConditions: 10,
+            }
+          },
+          {
+            filter: 'agSetColumnFilter',
+          }
         ],
-        debounceMs: 200,
-        maxNumConditions: 10,
       }
     }))
   }
