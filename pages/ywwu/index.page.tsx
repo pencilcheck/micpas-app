@@ -1,5 +1,5 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Spin, Tag } from 'antd';
+import { Button, Input, Segmented, Spin, Tag } from 'antd';
 import compact from 'lodash/compact';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -30,12 +30,15 @@ const Form: React.FC = () => {
   const [keywords, setKeywords] = useState('')
   const [dates, setDates] = useState<Dayjs[]>([])
   const gridRef = useRef<AgGridReact>(null);
+  const options = ['Both', '3rd Party', 'No 3rd Party'];
+  const [value, setValue] = useState<string | number>('Both');
 
   const { data, isRefetching, refetch } = useQuery(load, {})
 
   const search = async () => {
     setLoading(true);
     await refetch({
+      source: value,
       dates: dates.map(d => d.toISOString()),
       keywords: compact(keywords.split(',')),
     });
@@ -110,6 +113,11 @@ const Form: React.FC = () => {
                 )
               })}
             </div>
+            <Space direction="vertical" className='w-full'>
+              <Typography.Title level={5}>Source</Typography.Title>
+              <Segmented options={options} value={value} onChange={setValue} />
+            </Space>
+            <Typography.Title level={5}></Typography.Title>
             <Button type="primary" icon={<SearchOutlined />} onClick={search}>
               Search
             </Button>

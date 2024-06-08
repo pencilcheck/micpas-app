@@ -26,7 +26,7 @@ export async function loadRegions() {
   return [];
 }
 
-export async function load({ dates, keywords }: { dates?: string[], keywords?: string[] }) {
+export async function load({ source, dates, keywords }: { source?: 'Both' | '3rd Party' | 'No 3rd Party'; dates?: string[], keywords?: string[] }) {
   const days = (dates || []).map((d, i) => i === 0 ? dayjs(d).startOf('month') : dayjs(d).endOf('month'));
   // filter by education units text search (keywords) and dates
   // filter by meeting ids (within UI)
@@ -44,6 +44,9 @@ export async function load({ dates, keywords }: { dates?: string[], keywords?: s
   })
   .from(educationVectors)
   .where(and(
+    source === 'Both' || !source
+      ? undefined
+      : (source === '3rd Party' ? eq(educationVectors.isThirdParty, true) : eq(educationVectors.isThirdParty, false)),
     tsQuery ? sql`${educationVectors.vector} @@ to_tsquery(${tsQuery})` : undefined,
     days?.length > 0 ? and(
       gte(sql`${educationVectors.macpa_creditdate}::timestamp`, sql`${days[0].toISOString()}::timestamp`),
