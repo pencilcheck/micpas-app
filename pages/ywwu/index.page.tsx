@@ -14,6 +14,8 @@ import 'ag-grid-enterprise';
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
 
+import "./index.css";
+
 import "../../ag-grid-theme-builder.css";
 
 import { Dayjs } from 'dayjs';
