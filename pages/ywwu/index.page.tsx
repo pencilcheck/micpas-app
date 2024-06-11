@@ -55,6 +55,15 @@ const Form: React.FC = () => {
       'Rehmann',
     ];
     if (!isRefetching && data) {
+      colDefs.forEach((def) => {
+        // filters[1] is agSetColumnFilter, see telefunc
+        def.filterParams.filters[1].filterParams = {
+          valueFormatter: param => {
+            return String(param.value)
+          }
+        }
+      });
+
       colDefs.find((def) => {
         if (def.field === 'company') {
           def.filterParams.filters.find(d => d.filter === 'agTextColumnFilter').filterParams.filterOptions.push({
@@ -71,7 +80,26 @@ const Form: React.FC = () => {
   }, [isRefetching])
 
   const onBtnExport = useCallback(() => {
-    gridRef.current!.api.exportDataAsCsv();
+    gridRef.current!.api.exportDataAsCsv({
+      exportedRows: 'filteredAndSorted',
+      columnKeys: [
+        "id",
+        "firstName",
+        "lastName",
+        "preferredAddress",
+        "company",
+        "macpa_preferredAddressLine1",
+        "macpa_preferredAddressLine2",
+        "macpa_preferredAddressLine3",
+        "macpa_preferredAddressLine4",
+        "macpa_preferredCity",
+        "macpa_preferredState",
+        "macpa_preferredZip",
+        "macpa_badgeName",
+        "memberType",
+        "email",
+      ]
+    });
   }, []);
 
   // Row Data: The data to be displayed.
@@ -125,7 +153,7 @@ const Form: React.FC = () => {
         </Space>
       </Space>
       <div style={{ margin: "10px 0" }} className="flex justify-end">
-        <Button onClick={onBtnExport}>Download result as CSV</Button>
+        <Button onClick={onBtnExport}>Download filtered and sorted result as CSV</Button>
       </div>
       <div
         className="mt-4 ag-theme-quartz" // applying the grid theme

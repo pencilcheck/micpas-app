@@ -2,12 +2,16 @@ import Promise from 'bluebird';
 import { sql } from "drizzle-orm";
 import { getMaterializedViewConfig, getViewConfig } from "drizzle-orm/pg-core";
 import { db } from '../orm/local';
-import { educationVectors, personsToReachOut } from '../drizzle/ywwu';
+import { attendedMeetingIdsLateral, educationVectors, licensedStatesLateral, personsToReachOut, topicCodesLateral } from '../drizzle/ywwu';
 
 
 const foundation = () => {
 
   return [
+    attendedMeetingIdsLateral,
+    licensedStatesLateral,
+    topicCodesLateral,
+
     personsToReachOut,
     educationVectors,
   ]

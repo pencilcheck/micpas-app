@@ -1,38 +1,30 @@
-import { and, eq, getTableColumns, gte, ilike, inArray, lte, sql } from 'drizzle-orm';
+import dayjs from 'dayjs';
+import { and, eq, gte, inArray, lte, sql } from 'drizzle-orm';
+import { getMaterializedViewConfig } from 'drizzle-orm/pg-core';
 import compact from 'lodash/compact';
 import { educationVectors, personsToReachOut } from '../../drizzle/ywwu';
 import { db } from '../../orm/local';
-import { getMaterializedViewConfig } from 'drizzle-orm/pg-core';
-import dayjs, { Dayjs } from 'dayjs';
-import { vwEducationUnits } from '../../drizzle/schema';
 
-export async function loadPrimaryFunctions() {
-//APTIFY..vwPersons.PrimaryFunction = N'Firm Administrator' 
-  return [];
-}
-
-export async function licenseStates() {
-//vwPersonCPALicenses.LicenseState
-  return [];
-}
-
-export async function loadHomeStates() {
-//APTIFY..vwPersons.HomeState
-  return [];
-}
-
-export async function loadRegions() {
-//APTIFY..vwPersons.MACPA_Region
-  return [];
+const colHeader: {[key: string]: string} = {
+  "id": "ID",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "preferredAddress": "Preferred Address",
+  "company": "Company",
+  "macpa_preferredAddressLine1": "Preferred Address Line 1",
+  "macpa_preferredAddressLine2": "Preferred Address Line 2",
+  "macpa_preferredAddressLine3": "Preferred Address Line 3",
+  "macpa_preferredAddressLine4": "Preferred Address Line 4",
+  "macpa_preferredCity": "Preferred City",
+  "macpa_preferredState": "Preferred State",
+  "macpa_preferredZip": "Preferred Zip",
+  "macpa_badgeName": "Badge Name",
+  "memberType": "Member Type",
+  "email": "Email",
 }
 
 export async function load({ source, dates, keywords }: { source?: 'Both' | '3rd Party' | 'No 3rd Party'; dates?: string[], keywords?: string[] }) {
   const days = (dates || []).map((d, i) => i === 0 ? dayjs(d).startOf('month') : dayjs(d).endOf('month'));
-  // filter by education units text search (keywords) and dates
-  // filter by meeting ids (within UI)
-  // filter by deceased (already excluded in view)
-  // filter by other values (within UI)
-
   // make sure there is no duplicate person ids
   console.log('days', days.map(d => d.toISOString()))
   console.log('keywords', compact(keywords))
@@ -73,7 +65,9 @@ export async function load({ source, dates, keywords }: { source?: 'Both' | '3rd
   // no pagination, load all data into UI
   return {
     rowData: result,
+    // the colDefs will be expanded in frontend as functions can't be serialized across network using telefunc
     colDefs: Object.keys(cols).map((key) => ({
+      headerName: colHeader[key],
       field: key,
       filter: 'agMultiColumnFilter',
       filterParams: {

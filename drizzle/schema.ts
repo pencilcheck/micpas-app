@@ -6,6 +6,18 @@ const bytea = customType<{ data: Buffer; notNull: false; default: false }>({
   },
 });
 
+export const vwTopicCodeLinks = pgTable("vwTopicCodeLinks", {
+	id: integer("id"),
+	topiccodeid: integer("topiccodeid"),
+	topiccodeid_name: varchar("topiccodeid_name"),
+	entityid: integer("entityid"),
+	recordid: integer("recordid"),
+	recordname: varchar("recordname"),
+	Value: varchar("Value"),
+	status: varchar("status"),
+	dateadded: timestamp("dateadded", { mode: 'string' }),
+});
+
 export const vwPersons = pgTable("vwPersons", {
 	id: integer("id"),
 	namewcompany: varchar("namewcompany"),

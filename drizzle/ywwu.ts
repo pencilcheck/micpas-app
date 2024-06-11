@@ -1,6 +1,6 @@
 import { and, eq, gte, not, sql } from "drizzle-orm";
 import { alias, pgMaterializedView } from "drizzle-orm/pg-core";
-import { vwEducationUnits, vwMeetingAttendees, vwPersonCPALicenses, vwPersons } from "./schema";
+import { vwEducationUnits, vwMeetingAttendees, vwPersonCPALicenses, vwPersons, vwTopicCodeLinks } from "./schema";
 
 export const educationVectors = pgMaterializedView('education_vectors')
   .with({
@@ -17,25 +17,60 @@ export const educationVectors = pgMaterializedView('education_vectors')
     .from(vwEducationUnits)
   ));
 
-const meetingParent = alias(vwMeetingAttendees, "meeting_parent")
+// support
+export const attendedMeetingIdsLateral = pgMaterializedView('attended_meeting_ids_lateral')
+  .with({
+    autovacuum_enabled: true,
+  })
+  .withNoData()
+  .as((qb) => {
+    return qb.select({
+      id: vwMeetingAttendees.id,
+      attendedMeetingIds: sql`JSONB_AGG(${vwMeetingAttendees.actualmeetingid})`.as('attended_meeting_ids'),
+    })
+    .from(vwMeetingAttendees)
+    .groupBy(vwMeetingAttendees.id);
+  });
+
+export const licensedStatesLateral = pgMaterializedView('licensed_states_lateral')
+  .with({
+    autovacuum_enabled: true,
+  })
+  .withNoData()
+  .as((qb) => {
+    return qb.select({
+      id: vwPersonCPALicenses.personid,
+      licenseStates: sql`JSON_AGG(${vwPersonCPALicenses.licensestate})`.as('license_states'),
+    })
+    .from(vwPersonCPALicenses)
+    .groupBy(vwPersonCPALicenses.personid);
+  });
+
+export const topicCodesLateral = pgMaterializedView('topic_codes_lateral')
+  .with({
+    autovacuum_enabled: true,
+  })
+  .withNoData()
+  .as((qb) => {
+    return qb.select({
+      id: vwTopicCodeLinks.recordid,
+      topicCodes: sql`JSON_AGG(${vwTopicCodeLinks.topiccodeid})`.as('topic_codes'),
+    })
+    .from(vwTopicCodeLinks)
+    .where(
+      eq(vwTopicCodeLinks.status, 'Active')
+    )
+    .groupBy(vwTopicCodeLinks.recordid);
+  });
+
+
+
 export const personsToReachOut = pgMaterializedView('persons_to_reach_out')
   .with({
     autovacuum_enabled: true,
   })
   .withNoData()
   .as((qb) => {
-    const attendedMeetingIdsLateral = qb.select({
-      ids: sql`JSONB_AGG(${meetingParent.actualmeetingid})`
-    })
-    .from(meetingParent)
-    .where(eq(vwPersons.id, meetingParent.id))
-
-    const licensedStatesLateral = qb.select({
-      state: sql`JSON_AGG(${vwPersonCPALicenses.licensestate})`
-    })
-    .from(vwPersonCPALicenses)
-    .where(eq(vwPersons.id, vwPersonCPALicenses.personid))
-
     return qb.select({
       id: vwPersons.id,
       firstName: vwPersons.firstname,
@@ -55,20 +90,16 @@ export const personsToReachOut = pgMaterializedView('persons_to_reach_out')
 
       // for filtering
       primaryFunction: vwPersons.primaryfunction,
-      //licenseStates: vwPersonCPALicenses.licensestate,
-      licenseStates: sql`${licensedStatesLateral}`.as('license_states'),
+      licenseStates: licensedStatesLateral.licenseStates,
+      topicCodes: topicCodesLateral.topicCodes,
       homeState: vwPersons.homestate,
       region: vwPersons.macpa_region,
-      attendedMeetingIds: sql`${attendedMeetingIdsLateral}`.as('attended_meeting_ids'),
+      attendedMeetingIds: attendedMeetingIdsLateral.attendedMeetingIds,
     })
     .from(vwPersons)
-    //.leftJoin(vwPersonCPALicenses, and(
-      //// TODO confirm this with Randy
-      //eq(vwPersons.id, vwPersonCPALicenses.personid),
-      //eq(vwPersonCPALicenses.licensestatusid, 6), // Licensed Accountant License
-      //eq(vwPersonCPALicenses.licensetypeid, 1), // CPE license
-      //gte(sql`${vwPersonCPALicenses.expirationdate}::timestamp`, sql`now()::timestamp`), // not expired
-    //))
+    .leftJoin(attendedMeetingIdsLateral, eq(vwPersons.id, attendedMeetingIdsLateral.id))
+    .leftJoin(topicCodesLateral, eq(vwPersons.id, topicCodesLateral.id))
+    .leftJoin(licensedStatesLateral, eq(vwPersons.id, licensedStatesLateral.id))
     .where(and(
       not(eq(vwPersons.status, 5)) // exclude deceased persons
     ));
