@@ -4,7 +4,7 @@ import { useState } from 'react';
 export { PieChart }
 
 function PieChart({ data, title, angleKey, legendItemKey }: { data: object[], title: string, angleKey: string, legendItemKey: string }) {
-  const [options, setOptions] = useState({
+  const options = {
     data: data,
     title: {
       text: title,
@@ -23,7 +23,7 @@ function PieChart({ data, title, angleKey, legendItemKey }: { data: object[], ti
         },
       },
     ],
-  });
+  }
 
   return <AgCharts className="h-[600px] w-[1000px]" options={options} />;
 }
