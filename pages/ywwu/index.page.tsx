@@ -1,5 +1,6 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Segmented, Spin, Tag } from 'antd';
+import _ from 'lodash';
 import compact from 'lodash/compact';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -22,6 +23,8 @@ import { Dayjs } from 'dayjs';
 import { ErrorBound } from '../../components/ErrorBound';
 import useQuery from '../../hooks/useQuery';
 import { load } from './loadTableData.telefunc';
+import { PieChart } from '../../components/PieChart';
+import { isWhat } from '../../helpers/isGen';
 
 export { Page };
 
@@ -117,6 +120,19 @@ const Form: React.FC = () => {
 
   // TODO refer to the feature request milestone: https://docs.google.com/document/d/1-hETY_hsz0nTJnsPSsNWFYwxilChaO0yUXjWmiDUSJA/edit
 
+  const pieData = _(rowData)
+    .map(row => ({
+      generation: isWhat(row)
+    }))
+    .groupBy(row => row.generation)
+    .map((value, key) => {
+      return {
+        generation: key,
+        amount: value.length,
+      }
+    })
+    .value()
+
   return (
     <>
       <Spin spinning={loading} fullscreen />
@@ -156,6 +172,9 @@ const Form: React.FC = () => {
       </Space>
       <div style={{ margin: "10px 0" }} className="flex justify-end">
         <Button onClick={onBtnExport}>Download filtered and sorted result as CSV</Button>
+      </div>
+      <div style={{ width: "1000px", height: "600px", margin: "10px 0" }} className="flex justify-begin">
+        <PieChart data={pieData} title="Age generation chart" angleKey="amount" legendItemKey='generation' />
       </div>
       <div
         className="mt-4 ag-theme-quartz" // applying the grid theme

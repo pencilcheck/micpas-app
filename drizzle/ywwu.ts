@@ -88,6 +88,9 @@ export const personsToReachOut = pgMaterializedView('persons_to_reach_out')
       memberType: vwPersons.membertype,
       email: vwPersons.email,
 
+      // for chart
+      birthday: vwPersons.birthday,
+
       // for filtering
       primaryFunction: vwPersons.primaryfunction,
       licenseStates: licensedStatesLateral.licenseStates,
