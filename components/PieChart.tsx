@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 export { PieChart }
 
-function PieChart({ data, title, angleKey, legendItemKey }: { data: object[], title: string, angleKey: string, legendItemKey: string }) {
+function PieChart({ data, total, title, angleKey, legendItemKey }: { data: object[], total: number, title: string, angleKey: string, legendItemKey: string }) {
   const options = {
     data: data,
     title: {
@@ -19,7 +19,9 @@ function PieChart({ data, title, angleKey, legendItemKey }: { data: object[], ti
         sectorLabel: {
           color: "white",
           fontWeight: "bold",
-          formatter: ({ value }) => `${(value / 1000).toFixed(0)}K`,
+          // switching to percentage
+          //formatter: ({ value }) => `${(value / 1000).toFixed(0)}K`,
+          formatter: ({ value }) => `${((value / total) * 100).toFixed(0)}%`,
         },
       },
     ],
