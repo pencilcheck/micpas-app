@@ -1,5 +1,5 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Segmented, Spin, Tag } from 'antd';
+import { Button, Collapse, Input, Segmented, Spin, Tag } from 'antd';
 import _ from 'lodash';
 import compact from 'lodash/compact';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -197,9 +197,14 @@ const Form: React.FC = () => {
       <div style={{ margin: "10px 0" }} className="flex justify-end">
         <Button onClick={onBtnExport}>Download filtered and sorted result as CSV</Button>
       </div>
-      <div style={{ width: "1000px", height: "600px", margin: "10px 0" }} className="flex justify-begin">
-        <PieChart total={rowData.length} data={pieData} title="Age generation chart" angleKey="amount" legendItemKey='generation' />
-      </div>
+      <Collapse defaultActiveKey={['0']} ghost items={[{
+        key: '1',
+        label: 'Chart',
+        children: <div style={{ width: "1000px", height: "600px", margin: "10px 0" }} className="flex justify-begin">
+          <PieChart total={rowData.length} data={pieData} title="Age generation chart" angleKey="amount" legendItemKey='generation' />
+        </div>,
+      }]} />
+      
       <div
         className="mt-4 ag-theme-quartz" // applying the grid theme
         style={{ height: 500 }} // the grid will fill the size of the parent container
