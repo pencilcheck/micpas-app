@@ -51,6 +51,9 @@ const Form: React.FC = () => {
     // remove advanced features, enable only if it is requested
     suppressHeaderMenuButton: true,
     suppressHeaderContextMenu: true,
+
+    autoHeight: true,
+    wrapText: true,
   }
 
   const search = async () => {
@@ -99,6 +102,8 @@ const Form: React.FC = () => {
         if (def.field === 'topicCodes') {
           def.tooltipValueGetter = (p: ITooltipParams) => p.value;
           def.headerTooltip = "Topic Codes";
+          def.tooltipShowDelay = 0;
+          def.cellStyle = {'word-break': 'break-word'}
         }
       })
 
@@ -106,6 +111,8 @@ const Form: React.FC = () => {
         if (def.field === "attendedMeetingIds") {
           def.tooltipValueGetter = (p: ITooltipParams) => p.value;
           def.headerTooltip = "Meeting Ids";
+          def.tooltipShowDelay = 0;
+          def.cellStyle = {'word-break': 'break-word'}
         }
       })
     }
