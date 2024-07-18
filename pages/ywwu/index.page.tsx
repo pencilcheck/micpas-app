@@ -25,6 +25,7 @@ import useQuery from '../../hooks/useQuery';
 import { load } from './loadTableData.telefunc';
 import { PieChart } from '../../components/PieChart';
 import { isWhat } from '../../helpers/isGen';
+import { ITooltipParams } from 'ag-grid-community';
 
 export { Page };
 
@@ -40,6 +41,17 @@ const Form: React.FC = () => {
   const [value, setValue] = useState<string | number>('Both');
 
   const { data, isRefetching, refetch } = useQuery(load, {})
+
+  // Row Data: The data to be displayed.
+  const rowData = data.rowData;
+  // Column Definitions: Defines the columns to be displayed.
+  const colDefs = data.colDefs;
+
+  const defaultColDef = {
+    // remove advanced features, enable only if it is requested
+    suppressHeaderMenuButton: true,
+    suppressHeaderContextMenu: true,
+  }
 
   const search = async () => {
     setLoading(true);
@@ -82,6 +94,15 @@ const Form: React.FC = () => {
           })
         }
       })
+
+      colDefs.find((def) => {
+        if (def.field === 'topicCodes') {
+          def.tooltipValueGetter = (p: ITooltipParams) => p.value;
+          def.headerTooltip = "Topic Codes";
+        }
+      })
+
+      console.log(colDefs);
     }
   }, [isRefetching])
 
@@ -107,17 +128,6 @@ const Form: React.FC = () => {
       ]
     });
   }, []);
-
-  // Row Data: The data to be displayed.
-  const rowData = data.rowData;
-  // Column Definitions: Defines the columns to be displayed.
-  const colDefs = data.colDefs;
-
-  const defaultColDef = {
-    // remove advanced features, enable only if it is requested
-    suppressHeaderMenuButton: true,
-    suppressHeaderContextMenu: true,
-  }
 
   // TODO refer to the feature request milestone: https://docs.google.com/document/d/1-hETY_hsz0nTJnsPSsNWFYwxilChaO0yUXjWmiDUSJA/edit
   useEffect(() => {
