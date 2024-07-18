@@ -102,7 +102,12 @@ const Form: React.FC = () => {
         }
       })
 
-      console.log(colDefs);
+      colDefs.find((def) => {
+        if (def.field === "attendedMeetingIds") {
+          def.tooltipValueGetter = (p: ITooltipParams) => p.value;
+          def.headerTooltip = "Meeting Ids";
+        }
+      })
     }
   }, [isRefetching])
 
