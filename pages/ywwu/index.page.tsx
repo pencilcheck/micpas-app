@@ -32,7 +32,10 @@ export { Page };
 const { TextArea } = Input;
 
 const Form: React.FC = () => {
-  const [pieData, setPieData] = useState();
+  const [filteredData, setFilteredData] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [ageData, setAgeData] = useState();
+  const [regionData, setRegionData] = useState();
   const [loading, setLoading] = useState(false);
   const [keywords, setKeywords] = useState('')
   const [dates, setDates] = useState<Dayjs[]>([])
@@ -104,6 +107,25 @@ const Form: React.FC = () => {
           def.headerTooltip = "Topic Codes";
           def.tooltipShowDelay = 0;
           def.cellStyle = {'word-break': 'break-word'}
+
+
+          def.filterParams.filters.find(d => d.filter === 'agTextColumnFilter').filterParams.filterOptions.push({
+            displayKey: 'has_473',
+            displayName: 'Has Mobile Phone Texting Approval (473)',
+            predicate: (filterValues: any[], cellValue: any) => {
+              return (cellValue || []).includes(473);
+            },
+            numberOfInputs: 0,
+          })
+
+          def.filterParams.filters.find(d => d.filter === 'agTextColumnFilter').filterParams.filterOptions.push({
+            displayKey: 'no_473',
+            displayName: 'NO Mobile Phone Texting Approval (473)',
+            predicate: (filterValues: any[], cellValue: any) => {
+              return !(cellValue || []).includes(473);
+            },
+            numberOfInputs: 0,
+          })
         }
       })
 
@@ -141,9 +163,24 @@ const Form: React.FC = () => {
     });
   }, []);
 
+  // How filteredData is being updated
+  // grid api rowModel -> filters -> rowsToDisplay -> update
+  // rowData -> grid api rowModel -> ... -> update
+  // onFilterChanged -> grid api rowModel -> ... -> update
+  function updateRows(rowModel) {
+    setFilteredData(rowModel?.rowsToDisplay.map(node => node.data))
+    setTotal(rowModel?.rowsToDisplay.length)
+  }
+
   // TODO refer to the feature request milestone: https://docs.google.com/document/d/1-hETY_hsz0nTJnsPSsNWFYwxilChaO0yUXjWmiDUSJA/edit
   useEffect(() => {
-    setPieData(_(rowData)
+    if (data.rowData, gridRef.current?.api?.rowModel) {
+      updateRows(gridRef.current?.api?.rowModel)
+    }
+  }, [data.rowData, gridRef.current?.api?.rowModel])
+
+  useEffect(() => {
+    setAgeData(_(filteredData)
       .map(row => ({
         generation: isWhat(row)
       }))
@@ -155,7 +192,17 @@ const Form: React.FC = () => {
         }
       })
       .value())
-  }, [data.rowData])
+
+    setRegionData(_(filteredData)
+      .groupBy(row => row.region)
+      .map((value, key) => {
+        return {
+          region: key,
+          amount: value.length,
+        }
+      })
+      .value())
+  }, [filteredData])
 
   return (
     <>
@@ -197,13 +244,22 @@ const Form: React.FC = () => {
       <div style={{ margin: "10px 0" }} className="flex justify-end">
         <Button onClick={onBtnExport}>Download filtered and sorted result as CSV</Button>
       </div>
-      <Collapse defaultActiveKey={['0']} ghost items={[{
-        key: '1',
-        label: 'Chart',
-        children: <div style={{ width: "1000px", height: "600px", margin: "10px 0" }} className="flex justify-begin">
-          <PieChart total={rowData.length} data={pieData} title="Age generation chart" angleKey="amount" legendItemKey='generation' />
-        </div>,
-      }]} />
+      <Collapse defaultActiveKey={['0']} ghost items={[
+        {
+          key: '1',
+          label: 'Generation Chart',
+          children: <div style={{ width: "500px", height: "600px", margin: "10px 0" }} className="flex justify-begin">
+            <PieChart total={total} data={ageData} title="Age generation chart" angleKey="amount" legendItemKey='generation' />
+          </div>,
+        },
+        {
+          key: '2',
+          label: 'Region Chart',
+          children: <div style={{ width: "500px", height: "600px", margin: "10px 0" }} className="flex justify-begin">
+            <PieChart total={total} data={regionData} title="Region chart" angleKey="amount" legendItemKey='region' />
+          </div>,
+        }
+      ]} />
       
       <div
         className="mt-4 ag-theme-quartz" // applying the grid theme
@@ -216,6 +272,9 @@ const Form: React.FC = () => {
           pagination={true}
           columnMenu='new'
           defaultColDef={defaultColDef}
+          onFilterChanged={((ev) => {
+            updateRows(ev?.api?.rowModel)
+          })}
         />
       </div>
     </>
