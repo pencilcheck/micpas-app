@@ -1,5 +1,5 @@
-import { and, eq, gte, not, sql } from "drizzle-orm";
-import { alias, pgMaterializedView } from "drizzle-orm/pg-core";
+import { and, eq, not, sql } from "drizzle-orm";
+import { pgMaterializedView } from "drizzle-orm/pg-core";
 import { vwEducationUnits, vwMeetingAttendees, vwPersonCPALicenses, vwPersons, vwTopicCodeLinks } from "./schema";
 
 export const educationVectors = pgMaterializedView('education_vectors')
@@ -9,10 +9,10 @@ export const educationVectors = pgMaterializedView('education_vectors')
   .withNoData()
   .as((qb) => (
     qb.select({
-      id: vwEducationUnits.personid,
-      isThirdParty: sql`TRIM(${vwEducationUnits.source}) = '3rd Party' AND ${vwEducationUnits.webinarvendorid} IS NULL`.as('is_third_party'),
-      macpa_creditdate: vwEducationUnits.macpa_creditdate,
-      vector: sql`to_tsvector(${vwEducationUnits.externalsource})`.as('vector'),
+      id: vwEducationUnits.PersonID,
+      isThirdParty: sql`TRIM(${vwEducationUnits.Source}) = '3rd Party' AND ${vwEducationUnits.WebinarVendorID} IS NULL`.as('is_third_party'),
+      macpa_creditdate: vwEducationUnits.MACPA_CreditDate,
+      vector: sql`to_tsvector(${vwEducationUnits.ExternalSource})`.as('vector'),
     })
     .from(vwEducationUnits)
   ));
@@ -25,11 +25,11 @@ export const attendedMeetingIdsLateral = pgMaterializedView('attended_meeting_id
   .withNoData()
   .as((qb) => {
     return qb.select({
-      id: vwMeetingAttendees.id,
-      attendedMeetingIds: sql`JSONB_AGG(${vwMeetingAttendees.actualmeetingid})`.as('attended_meeting_ids'),
+      id: vwMeetingAttendees.ID,
+      attendedMeetingIds: sql`JSONB_AGG(${vwMeetingAttendees.ActualMeetingID})`.as('attended_meeting_ids'),
     })
     .from(vwMeetingAttendees)
-    .groupBy(vwMeetingAttendees.id);
+    .groupBy(vwMeetingAttendees.ID);
   });
 
 export const licensedStatesLateral = pgMaterializedView('licensed_states_lateral')
@@ -39,11 +39,11 @@ export const licensedStatesLateral = pgMaterializedView('licensed_states_lateral
   .withNoData()
   .as((qb) => {
     return qb.select({
-      id: vwPersonCPALicenses.personid,
-      licenseStates: sql`JSON_AGG(${vwPersonCPALicenses.licensestate})`.as('license_states'),
+      id: vwPersonCPALicenses.PersonID,
+      licenseStates: sql`JSON_AGG(${vwPersonCPALicenses.LicenseState})`.as('license_states'),
     })
     .from(vwPersonCPALicenses)
-    .groupBy(vwPersonCPALicenses.personid);
+    .groupBy(vwPersonCPALicenses.PersonID);
   });
 
 export const topicCodesLateral = pgMaterializedView('topic_codes_lateral')
@@ -53,14 +53,14 @@ export const topicCodesLateral = pgMaterializedView('topic_codes_lateral')
   .withNoData()
   .as((qb) => {
     return qb.select({
-      id: vwTopicCodeLinks.recordid,
-      topicCodes: sql`JSON_AGG(${vwTopicCodeLinks.topiccodeid})`.as('topic_codes'),
+      id: vwTopicCodeLinks.RecordID,
+      topicCodes: sql`JSON_AGG(${vwTopicCodeLinks.TopicCodeID})`.as('topic_codes'),
     })
     .from(vwTopicCodeLinks)
     .where(
-      eq(vwTopicCodeLinks.status, 'Active')
+      eq(vwTopicCodeLinks.Status, 'Active')
     )
-    .groupBy(vwTopicCodeLinks.recordid);
+    .groupBy(vwTopicCodeLinks.RecordID);
   });
 
 
@@ -72,38 +72,38 @@ export const personsToReachOut = pgMaterializedView('persons_to_reach_out')
   .withNoData()
   .as((qb) => {
     return qb.select({
-      id: vwPersons.id,
-      firstName: vwPersons.firstname,
-      lastName: vwPersons.lastname,
-      preferredAddress: vwPersons.preferredaddress,
-      company: vwPersons.company,
-      macpa_preferredAddressLine1: vwPersons.macpa_preferredaddressline1,
-      macpa_preferredAddressLine2: vwPersons.macpa_preferredaddressline2,
-      macpa_preferredAddressLine3: vwPersons.macpa_preferredaddressline3,
-      macpa_preferredAddressLine4: vwPersons.macpa_preferredaddressline4,
-      macpa_preferredCity: vwPersons.macpa_preferredcity,
-      macpa_preferredState: vwPersons.macpa_preferredstate,
-      macpa_preferredZip: vwPersons.macpa_preferredzip,
-      macpa_badgeName: vwPersons.macpa_badgename,
-      memberType: vwPersons.membertype,
-      email: vwPersons.email,
+      id: vwPersons.ID,
+      firstName: vwPersons.FirstName,
+      lastName: vwPersons.LastName,
+      preferredAddress: vwPersons.PreferredAddress,
+      company: vwPersons.Company,
+      macpa_preferredAddressLine1: vwPersons.MACPA_PreferredAddressLine1,
+      macpa_preferredAddressLine2: vwPersons.MACPA_PreferredAddressLine2,
+      macpa_preferredAddressLine3: vwPersons.MACPA_PreferredAddressLine3,
+      macpa_preferredAddressLine4: vwPersons.MACPA_PreferredAddressLine4,
+      macpa_preferredCity: vwPersons.MACPA_PreferredCity,
+      macpa_preferredState: vwPersons.MACPA_PreferredState,
+      macpa_preferredZip: vwPersons.MACPA_PreferredZip,
+      macpa_badgeName: vwPersons.MACPA_BadgeName,
+      memberType: vwPersons.MemberType,
+      email: vwPersons.Email,
 
       // for chart
-      birthday: vwPersons.birthday,
+      birthday: vwPersons.Birthday,
 
       // for filtering
-      primaryFunction: vwPersons.primaryfunction,
+      primaryFunction: vwPersons.PrimaryFunction,
       licenseStates: licensedStatesLateral.licenseStates,
       topicCodes: topicCodesLateral.topicCodes,
-      homeState: vwPersons.homestate,
-      region: vwPersons.macpa_region,
+      homeState: vwPersons.HomeState,
+      region: vwPersons.MACPA_Region,
       attendedMeetingIds: attendedMeetingIdsLateral.attendedMeetingIds,
     })
     .from(vwPersons)
-    .leftJoin(attendedMeetingIdsLateral, eq(vwPersons.id, attendedMeetingIdsLateral.id))
-    .leftJoin(topicCodesLateral, eq(vwPersons.id, topicCodesLateral.id))
-    .leftJoin(licensedStatesLateral, eq(vwPersons.id, licensedStatesLateral.id))
+    .leftJoin(attendedMeetingIdsLateral, eq(vwPersons.ID, attendedMeetingIdsLateral.id))
+    .leftJoin(topicCodesLateral, eq(vwPersons.ID, topicCodesLateral.id))
+    .leftJoin(licensedStatesLateral, eq(vwPersons.ID, licensedStatesLateral.id))
     .where(and(
-      not(eq(vwPersons.status, 5)) // exclude deceased persons
+      not(eq(vwPersons.Status, '5')) // exclude deceased persons
     ));
   });
