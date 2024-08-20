@@ -89,7 +89,7 @@ export const personsToReachOut = pgMaterializedView('persons_to_reach_out')
       email: vwPersons.Email,
 
       // for chart
-      birthday: vwPersons.Birthday,
+      birthday: sql`${vwPersons.Birthday}::timestamp`.as('birthday'),
 
       // for filtering
       primaryFunction: vwPersons.PrimaryFunction,
