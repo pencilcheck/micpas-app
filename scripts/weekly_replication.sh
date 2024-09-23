@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SOURCE_PATH=postgresql://tenniswinner555:gEhat5cX0nvF@ep-wandering-sea-43477426-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require
-DEST_PATH=postgres://u5q355384235:2JWqApUfeeIRtiONwz5aStOcJKFn6KLsbUr5MIa9E9lKih3tPYchx67e77NCoTOZ@hy-280c8257-d029-428f-aabe-8dae0084caa2.us-east-1.aws.hydradb.io:5432/d9q763114527?sslmode=require
+DEST_PATH=postgres://postgres:hydra@o0gc8084kg8kw4ccwcsgwk8s.62.72.1.245.sslip.io:6543/postgres
 
 # ONLY for "vwEducationUnits" since we use append only on it
 dedup_source() {
