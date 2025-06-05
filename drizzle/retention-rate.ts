@@ -221,29 +221,22 @@ export const combinationPersonsConvertedByMemberTypeCount = pgMaterializedView('
 // }}}
 
 // {{{ Drilldown
-// export const memberBasePersonsQuotedByMemberTypeDetails = pgMaterializedView('member_base_persons_quoted_by_membertype_details')
-// .using('columnar')
-// .as(
-//   db.select()
-//   .from(memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount)
-//   .where(and(
-//     gte(sql`${memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount.orderYear}::integer`, sql`(EXTRACT(YEAR FROM CURRENT_DATE)-4)::integer`),
-//   ))
-// );
+export const memberBasePersonsQuotedByMemberTypeDetails = pgMaterializedView('member_base_persons_quoted_by_membertype_details')
+.using('columnar')
+.as(
+  db.select()
+  .from(memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount)
+);
 
 
 // ---------------- materialized views of the pgViews current quotes ------------------- //
 
 // ---------------- drilldown view for gen pop ------------------- //
-// past 3 years so we are not too slow
-// export const memberBasePersonsConvertedByMemberTypeDetails = pgMaterializedView('member_base_persons_converted_by_membertype_details')
-// .using('columnar')
-// .as(
-//   db.select()
-//   .from(memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount)
-//   .where(and(
-//     gte(sql`${memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.orderYear}::integer`, sql`(EXTRACT(YEAR FROM CURRENT_DATE)-4)::integer`),
-//   ))
-// );
+export const memberBasePersonsConvertedByMemberTypeDetails = pgMaterializedView('member_base_persons_converted_by_membertype_details')
+.using('columnar')
+.as(
+  db.select()
+  .from(memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount)
+);
 
 // }}}
