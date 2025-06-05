@@ -3,6 +3,7 @@ import { pgMaterializedView } from "drizzle-orm/pg-core";
 import { vwEducationUnits, vwMeetingAttendees, vwPersonCPALicenses, vwPersons, vwTopicCodeLinks } from "./schema";
 
 export const educationVectors = pgMaterializedView('education_vectors')
+  .using('columnar')
   .with({
     autovacuum_enabled: true,
   })
@@ -19,6 +20,7 @@ export const educationVectors = pgMaterializedView('education_vectors')
 
 // support
 export const attendedMeetingIdsLateral = pgMaterializedView('attended_meeting_ids_lateral')
+  .using('columnar')
   .with({
     autovacuum_enabled: true,
   })
@@ -33,6 +35,7 @@ export const attendedMeetingIdsLateral = pgMaterializedView('attended_meeting_id
   });
 
 export const licensedStatesLateral = pgMaterializedView('licensed_states_lateral')
+  .using('columnar')
   .with({
     autovacuum_enabled: true,
   })
@@ -47,6 +50,7 @@ export const licensedStatesLateral = pgMaterializedView('licensed_states_lateral
   });
 
 export const topicCodesLateral = pgMaterializedView('topic_codes_lateral')
+  .using('columnar')
   .with({
     autovacuum_enabled: true,
   })
@@ -66,6 +70,7 @@ export const topicCodesLateral = pgMaterializedView('topic_codes_lateral')
 
 
 export const personsToReachOut = pgMaterializedView('persons_to_reach_out')
+  .using('columnar')
   .with({
     autovacuum_enabled: true,
   })
