@@ -104,7 +104,8 @@ export const timeSeriesTable = pgMaterializedView('time_series_table', {
 const memberBasePersonsQuotedLateralTable = 
     db.select({
       id: shippedVwOrders.ID,
-      shipToId: shippedVwOrders.ShipToID
+      shipToId: shippedVwOrders.ShipToID,
+      computeBillingType: sql<string>`CASE WHEN TRIM(${shippedVwOrders.MACPA_FirmPaysDues}) = '1' THEN '1' ELSE '0' END`.as('computeBillingType'), // Null and 0 are all lumped into the same value
     })
     .from(shippedVwOrders)
     .where(and(
@@ -117,6 +118,7 @@ export const memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount = pgView(
   orderStartMonthYear: timestamp('start_month_year'),
   orderEndMonthYear: timestamp('end_month_year'),
   memberTypeId: text('member_type_id'),
+  computeBillingType: text('computeBillingType'),
   orderId: text('ID'),
   shipToId: text('ShipToID'),
 }).as(
@@ -133,6 +135,7 @@ const memberBasePersonsConvertedLateralTable =
     db.select({
       orderId: shippedVwOrders.ID,
       shipToId: shippedVwOrders.ShipToID,
+      computeBillingType: sql<string>`CASE WHEN TRIM(${shippedVwOrders.MACPA_FirmPaysDues}) = '1' THEN '1' ELSE '0' END`.as('computeBillingType'), // Null and 0 are all lumped into the same value
       extended: sql`COALESCE(${shippedVwOrders.GrandTotal}::float, 0)::float`.as('Extended'),
     })
     .from(shippedVwOrders)
@@ -148,6 +151,7 @@ export const memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount = pgVi
   orderStartMonthYear: timestamp('start_month_year'),
   orderEndMonthYear: timestamp('end_month_year'),
   memberTypeId: text('member_type_id'),
+  computeBillingType: text('computeBillingType'),
   extended: text('Extended'),
   orderId: text('ID'),
   shipToId: text('ShipToID'),
@@ -173,6 +177,7 @@ export const combinationPersonsQuotedByMemberTypeCount = pgMaterializedView('com
     orderStartMonthYear: memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount.orderStartMonthYear,
     orderEndMonthYear: memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount.orderEndMonthYear,
     memberTypeId: memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount.memberTypeId,
+    computeBillingType: memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount.computeBillingType,
     orderCount: sql<number>`count(distinct ${memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount.shipToId})::integer`.as('orderCount')
   })
   .from(memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount)
@@ -184,11 +189,13 @@ export const combinationPersonsQuotedByMemberTypeCount = pgMaterializedView('com
     memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount.orderStartMonthYear,
     memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount.orderEndMonthYear,
     memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount.memberTypeId,
+    memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount.computeBillingType,
   )
   .orderBy(
     memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount.orderYear,
     memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount.orderStartMonthYear,
     memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount.memberTypeId,
+    memberBaseYearlyCombinationPersonsQuotedByMemberTypeCount.computeBillingType,
   )
 );
 
@@ -200,6 +207,7 @@ export const combinationPersonsConvertedByMemberTypeCount = pgMaterializedView('
     orderStartMonthYear: memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.orderStartMonthYear,
     orderEndMonthYear: memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.orderEndMonthYear,
     memberTypeId: memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.memberTypeId,
+    computeBillingType: memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.computeBillingType,
     extendedTotal: sql<number>`sum(${memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.extended}::float)`.as('extendedTotal'),
     shipCount: sql<number>`count(distinct ${memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.shipToId})::integer`.as('shipCount')
   })
@@ -212,11 +220,13 @@ export const combinationPersonsConvertedByMemberTypeCount = pgMaterializedView('
     memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.orderStartMonthYear,
     memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.orderEndMonthYear,
     memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.memberTypeId,
+    memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.computeBillingType
   )
   .orderBy(
     memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.orderYear,
     memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.orderStartMonthYear,
     memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.memberTypeId,
+    memberBaseYearlyCombinationPersonsConvertedByMemberTypeCount.computeBillingType
   )
 );
 
