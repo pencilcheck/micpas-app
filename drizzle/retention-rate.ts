@@ -63,6 +63,8 @@ export const shippedVwOrders = pgMaterializedView('shipped_vworders')
 
 const listOfDuesProducts = db.selectDistinct({ id: sql`${vwOrders.Line1_ProductID}`.as('member_type_id') }).from(vwOrders).where(eq(sql`TRIM(${vwOrders.Line1_ProductCategory})`, 'Dues'))
 
+// NOTE: MICPA seems to want to use March instead of April
+
 export const timeSeriesTable = pgMaterializedView('time_series_table', {
   yearValue: numeric('year_value'),
   orderStartMonthYear: timestamp('start_month_year'),
@@ -82,14 +84,14 @@ export const timeSeriesTable = pgMaterializedView('time_series_table', {
     ) iter_year
     cross join lateral
         generate_series(
-          (iter_year.year_value || '-04-01 00:00:00')::timestamp,
-          ((iter_year.year_value+1) || '-03-01 00:00:00')::timestamp,
+          (iter_year.year_value || '-03-01 00:00:00')::timestamp,
+          ((iter_year.year_value+1) || '-02-01 00:00:00')::timestamp,
           INTERVAL '1 month'
         ) as t(start_month_year)
         cross join
             generate_series(
               start_month_year + INTERVAL '1 month',
-              ((iter_year.year_value+1) || '-04-01 00:00:00')::timestamp,
+              ((iter_year.year_value+1) || '-03-01 00:00:00')::timestamp,
               INTERVAL '1 month'
             ) as y(end_month_year)
   ) time_series
