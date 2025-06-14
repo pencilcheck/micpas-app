@@ -35,6 +35,7 @@ export const cpaLicenseEducationPerCategory = pgMaterializedView('cpa_license_ed
       state: vwPersons.State,
       email: vwPersons.Email,
       memberType: vwPersons.MemberType,
+      company: vwPersons.Company,
       companyId: vwPersons.CompanyID,
 
       recentDateEarned: recentDatePerPerson.dateEarned,
@@ -64,6 +65,7 @@ export const cpaLicenseEducationPerCategory = pgMaterializedView('cpa_license_ed
       vwPersons.State,
       vwPersons.Email,
       vwPersons.MemberType,
+      vwPersons.Company,
       vwPersons.CompanyID,
 
       recentDatePerPerson.dateEarned,
