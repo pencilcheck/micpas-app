@@ -12,12 +12,14 @@ const { ...shipmentCols } = getTableColumns(vwOrders);
 
 // {{{ Extended raw tables
 
+// NOTE: for MI only for now
 const recentDatePerPerson = db.select({
     personId: vwEducationUnits.PersonID,
     dateEarned: vwEducationUnits.DateEarned,
     rowNum: sql`ROW_NUMBER() OVER (PARTITION BY ${vwEducationUnits.PersonID} ORDER BY ${vwEducationUnits.DateEarned}::timestamp DESC)`.as('recentDatePerPerson_rowNum')
   })
     .from(vwEducationUnits)
+    .where(and(eq(vwEducationUnits.EducationCategoryID, '10'))) // MI
     .as('recentDatePerPerson');
 
 export const cpaLicenseEducationPerCategory = pgMaterializedView('cpa_license_education_per_category')
