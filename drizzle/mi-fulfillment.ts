@@ -28,6 +28,8 @@ export const cpaLicenseEducationPerCategory = pgMaterializedView('cpa_license_ed
     db.select({
       personID: vwPersonCPALicenses.PersonID,
       licenseType: vwPersonCPALicenses.LicenseType,
+      licenseStatus: vwPersonCPALicenses.LicenseStatus,
+      licenseStatusID: vwPersonCPALicenses.LicenseStatusID,
       licenseNo: vwPersonCPALicenses.LicenseNo,
       expirationDate: vwPersonCPALicenses.ExpirationDate,
 
@@ -58,6 +60,8 @@ export const cpaLicenseEducationPerCategory = pgMaterializedView('cpa_license_ed
     .groupBy(
       vwPersonCPALicenses.PersonID,
       vwPersonCPALicenses.LicenseType,
+      vwPersonCPALicenses.LicenseStatus,
+      vwPersonCPALicenses.LicenseStatusID,
       vwPersonCPALicenses.LicenseNo,
       vwPersonCPALicenses.ExpirationDate,
 
