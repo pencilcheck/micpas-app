@@ -12,12 +12,13 @@ truncate_dest() {
   psql ${DEST_PATH} -c 'TRUNCATE "vwEducationUnits";'
   psql ${DEST_PATH} -c 'TRUNCATE "vwOrders";'
   psql ${DEST_PATH} -c 'TRUNCATE "vwOrderDetails";'
+  psql ${DEST_PATH} -c 'TRUNCATE "vwProducts";'
   set -e
 }
 
 dump_and_pipe() {
   # -a (insert only) will error out for those with table not created, remove -a will have error about table already exist but it should pass
-  pg_dump -Fc -v -t '"vwMeetingAttendees"' -t '"vwPersonCPALicenses"' -t '"vwTopicCodeLinks"' -t '"vwPersons"' -t '"vwEducationUnits"' -t '"vwOrders"' -t '"vwOrderDetails"' -d ${SOURCE_PATH} | pg_restore -v -d ${DEST_PATH}
+  pg_dump -Fc -v -t '"vwMeetingAttendees"' -t '"vwPersonCPALicenses"' -t '"vwTopicCodeLinks"' -t '"vwPersons"' -t '"vwEducationUnits"' -t '"vwOrders"' -t '"vwOrderDetails"' -t '"vwProducts"' -d ${SOURCE_PATH} | pg_restore -v -d ${DEST_PATH}
 }
 
 truncate_dest && dump_and_pipe
