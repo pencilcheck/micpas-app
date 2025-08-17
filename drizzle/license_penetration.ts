@@ -46,7 +46,8 @@ export const cpaLicensePersons = pgMaterializedView('cpa_license_persons')
     db.select({
       // ...cols,
       personId: lastSequencePersonCPALicenses.PersonID,
-      licenseStatus: lastSequencePersonCPALicenses.MICPA_LARAStatus,
+      licenseStatus: lastSequencePersonCPALicenses.LicenseStatus,
+      micpaLaraLicenseStatus: lastSequencePersonCPALicenses.MICPA_LARAStatus,
       expirationDate: lastSequencePersonCPALicenses.ExpirationDate,
 
       region: vwPersons.MACPA_Region,
@@ -56,7 +57,7 @@ export const cpaLicensePersons = pgMaterializedView('cpa_license_persons')
       lastName: vwPersons.LastName,
       title: vwPersons.Title,
       memberType: vwPersons.MemberType,
-      status: vwPersons.StatusName,
+      memberStatus: vwPersons.StatusName,
       joinDate: vwPersons.JoinDate,
       duesPaidThru: vwPersons.DuesPaidThru,
       city: vwPersons.City,
